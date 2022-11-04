@@ -16,5 +16,16 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Button Name="btnBack" Grid.Column="1" Content="Back" Height="36" VerticalAlignment="Bottom" Click="btnBack_Click"></Button>
+        <DataGrid Name="dgWork" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id работы:" Binding="{Binding id}"/>
+                <DataGridTextColumn Header="Вид работы" Binding="{Binding kind_material}"/>
+                <DataGridTextColumn Header="Дата Создания" Binding="{Binding date_create}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+        <Button Name="Add" Content="Add" Margin="0,100" Click="Add_Click"/>
+            <Button Name="Delete" Content="Delete" Margin="0,100"/>
+        </StackPanel>
     </Grid>
 </Window>

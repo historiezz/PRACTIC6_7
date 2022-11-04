@@ -15,12 +15,12 @@ namespace practic6_7
     
     public partial class practicEntities : DbContext
     {
-        private practicEntities _context;
+        private static practicEntities _context;
         public practicEntities()
             : base("name=practicEntities")
         {
         }
-        public practicEntities GetContext()
+        public static practicEntities GetContext()
         {
             if(_context == null)
                 _context = new practicEntities();

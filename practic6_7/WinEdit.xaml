@@ -16,5 +16,20 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Button Name="btnBack" Grid.Column="1" Content="Back" Height="36" VerticalAlignment="Bottom" Click="btnBack_Click"></Button>
+        <DataGrid Name="dgRazmer" IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding id}"/>
+                <DataGridTextColumn Header="Height" Binding="{Binding height}"/>
+                <DataGridTextColumn Header="Width" Binding="{Binding width}"/>
+                <DataGridTextColumn Header="Glubina" Binding="{Binding glubina}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnEdit" Content="Edit" Click="btnEdit_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

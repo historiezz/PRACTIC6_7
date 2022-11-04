@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using _db = practic6_7.practicEntities;
 
 namespace practic6_7
 {
@@ -22,12 +23,18 @@ namespace practic6_7
         public WinAdd_Del()
         {
             InitializeComponent();
+            dgWork.ItemsSource = _db.GetContext().work.ToList();
         }
-
+       
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
             Hide();
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
