@@ -25,7 +25,7 @@
         </DataGrid>
         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
         <Button Name="Add" Content="Add" Margin="0,100" Click="Add_Click"/>
-            <Button Name="Delete" Content="Delete" Margin="0,100"/>
+            <Button Name="Delete" Content="Delete" Margin="0,100" Click="Delete_Click"/>
         </StackPanel>
     </Grid>
 </Window>

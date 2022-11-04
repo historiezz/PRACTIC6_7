@@ -34,7 +34,28 @@ namespace practic6_7
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            
+            new WinAdd().Show();
+            Hide();
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            var clientForRemoving = dgWork.SelectedItems.Cast<work>().ToList();
+
+            if (MessageBox.Show($"Вы точно хотите удалить следующие {clientForRemoving.Count()} элементов?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    _db.GetContext().work.RemoveRange(clientForRemoving);
+                    _db.GetContext().SaveChanges();
+                    MessageBox.Show("Данные удалены");
+                    dgWork.ItemsSource = _db.GetContext().work.ToList();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
         }
     }
 }

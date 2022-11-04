@@ -73,6 +73,9 @@
     <Compile Include="cityorg.cs">
       <DependentUpon>ModelVis.tt</DependentUpon>
     </Compile>
+    <Compile Include="Edit_win.xaml.cs">
+      <DependentUpon>Edit_win.xaml</DependentUpon>
+    </Compile>
     <Compile Include="hall.cs">
       <DependentUpon>ModelVis.tt</DependentUpon>
     </Compile>
@@ -96,6 +99,9 @@
     <Compile Include="vladelec.cs">
       <DependentUpon>ModelVis.tt</DependentUpon>
     </Compile>
+    <Compile Include="WinAdd.xaml.cs">
+      <DependentUpon>WinAdd.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WinAdd_Del.xaml.cs">
       <DependentUpon>WinAdd_Del.xaml</DependentUpon>
     </Compile>
@@ -105,6 +111,10 @@
     <Compile Include="work.cs">
       <DependentUpon>ModelVis.tt</DependentUpon>
     </Compile>
+    <Page Include="Edit_win.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -117,6 +127,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="WinAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WinAdd_Del.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

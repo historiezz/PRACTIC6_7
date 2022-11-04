@@ -34,6 +34,8 @@ namespace practic6_7
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
+            new Edit_win(sender).Show();
+            Hide();
 
         }
     }
