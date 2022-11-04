@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище practicModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="artist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="place_bith" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="bday" Type="date" Nullable="false" />
+          <Property Name="disc_artist" Type="nvarchar(max)" />
+          <Property Name="education" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="id_work" Type="int" />
+        </EntityType>
+        <EntityType Name="cityorg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kind" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hall">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="sqare" Type="int" Nullable="false" />
+          <Property Name="phone" Type="int" Nullable="false" />
+          <Property Name="id_vistavki" Type="int" />
+          <Property Name="id_vladelec" Type="int" />
+        </EntityType>
+        <EntityType Name="razmer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="height" Type="int" Nullable="false" />
+          <Property Name="width" Type="int" Nullable="false" />
+          <Property Name="glubina" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vistavki">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kind" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="date_event" Type="date" Nullable="false" />
+          <Property Name="id_artist" Type="int" />
+        </EntityType>
+        <EntityType Name="vladelec">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="pgone" Type="int" Nullable="false" />
+          <Property Name="id_cityorg" Type="int" />
+        </EntityType>
+        <EntityType Name="work">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kind_material" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="date_create" Type="date" Nullable="false" />
+          <Property Name="id_razmer" Type="int" />
+        </EntityType>
+        <Association Name="FK_artist_work">
+          <End Role="work" Type="Self.work" Multiplicity="0..1" />
+          <End Role="artist" Type="Self.artist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="work">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="artist">
+              <PropertyRef Name="id_work" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hall_vistavki">
+          <End Role="vistavki" Type="Self.vistavki" Multiplicity="0..1" />
+          <End Role="hall" Type="Self.hall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vistavki">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="hall">
+              <PropertyRef Name="id_vistavki" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hall_vladelec">
+          <End Role="vladelec" Type="Self.vladelec" Multiplicity="0..1" />
+          <End Role="hall" Type="Self.hall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vladelec">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="hall">
+              <PropertyRef Name="id_vladelec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vistavki_artist">
+          <End Role="artist" Type="Self.artist" Multiplicity="0..1" />
+          <End Role="vistavki" Type="Self.vistavki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="artist">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vistavki">
+              <PropertyRef Name="id_artist" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vladelec_cityorg">
+          <End Role="cityorg" Type="Self.cityorg" Multiplicity="0..1" />
+          <End Role="vladelec" Type="Self.vladelec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cityorg">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vladelec">
+              <PropertyRef Name="id_cityorg" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_work_razmer">
+          <End Role="razmer" Type="Self.razmer" Multiplicity="0..1" />
+          <End Role="work" Type="Self.work" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="razmer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="work">
+              <PropertyRef Name="id_razmer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище practicModelContainer">
+          <EntitySet Name="artist" EntityType="Self.artist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cityorg" EntityType="Self.cityorg" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hall" EntityType="Self.hall" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="razmer" EntityType="Self.razmer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vistavki" EntityType="Self.vistavki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vladelec" EntityType="Self.vladelec" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="work" EntityType="Self.work" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_artist_work" Association="Self.FK_artist_work">
+            <End Role="work" EntitySet="work" />
+            <End Role="artist" EntitySet="artist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hall_vistavki" Association="Self.FK_hall_vistavki">
+            <End Role="vistavki" EntitySet="vistavki" />
+            <End Role="hall" EntitySet="hall" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hall_vladelec" Association="Self.FK_hall_vladelec">
+            <End Role="vladelec" EntitySet="vladelec" />
+            <End Role="hall" EntitySet="hall" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vistavki_artist" Association="Self.FK_vistavki_artist">
+            <End Role="artist" EntitySet="artist" />
+            <End Role="vistavki" EntitySet="vistavki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vladelec_cityorg" Association="Self.FK_vladelec_cityorg">
+            <End Role="cityorg" EntitySet="cityorg" />
+            <End Role="vladelec" EntitySet="vladelec" />
+          </AssociationSet>
+          <AssociationSet Name="FK_work_razmer" Association="Self.FK_work_razmer">
+            <End Role="razmer" EntitySet="razmer" />
+            <End Role="work" EntitySet="work" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="practicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="artist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="place_bith" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="bday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="disc_artist" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="education" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_work" Type="Int32" />
+          <NavigationProperty Name="work" Relationship="Self.FK_artist_work" FromRole="artist" ToRole="work" />
+          <NavigationProperty Name="vistavki" Relationship="Self.FK_vistavki_artist" FromRole="artist" ToRole="vistavki" />
+        </EntityType>
+        <EntityType Name="cityorg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kind" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="vladelec" Relationship="Self.FK_vladelec_cityorg" FromRole="cityorg" ToRole="vladelec" />
+        </EntityType>
+        <EntityType Name="hall">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sqare" Type="Int32" Nullable="false" />
+          <Property Name="phone" Type="Int32" Nullable="false" />
+          <Property Name="id_vistavki" Type="Int32" />
+          <Property Name="id_vladelec" Type="Int32" />
+          <NavigationProperty Name="vistavki" Relationship="Self.FK_hall_vistavki" FromRole="hall" ToRole="vistavki" />
+          <NavigationProperty Name="vladelec" Relationship="Self.FK_hall_vladelec" FromRole="hall" ToRole="vladelec" />
+        </EntityType>
+        <EntityType Name="razmer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="height" Type="Int32" Nullable="false" />
+          <Property Name="width" Type="Int32" Nullable="false" />
+          <Property Name="glubina" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="work" Relationship="Self.FK_work_razmer" FromRole="razmer" ToRole="work" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vistavki">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kind" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date_event" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_artist" Type="Int32" />
+          <NavigationProperty Name="artist" Relationship="Self.FK_vistavki_artist" FromRole="vistavki" ToRole="artist" />
+          <NavigationProperty Name="hall" Relationship="Self.FK_hall_vistavki" FromRole="vistavki" ToRole="hall" />
+        </EntityType>
+        <EntityType Name="vladelec">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pgone" Type="Int32" Nullable="false" />
+          <Property Name="id_cityorg" Type="Int32" />
+          <NavigationProperty Name="cityorg" Relationship="Self.FK_vladelec_cityorg" FromRole="vladelec" ToRole="cityorg" />
+          <NavigationProperty Name="hall" Relationship="Self.FK_hall_vladelec" FromRole="vladelec" ToRole="hall" />
+        </EntityType>
+        <EntityType Name="work">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kind_material" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date_create" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_razmer" Type="Int32" />
+          <NavigationProperty Name="artist" Relationship="Self.FK_artist_work" FromRole="work" ToRole="artist" />
+          <NavigationProperty Name="razmer" Relationship="Self.FK_work_razmer" FromRole="work" ToRole="razmer" />
+        </EntityType>
+        <Association Name="FK_artist_work">
+          <End Role="work" Type="Self.work" Multiplicity="0..1" />
+          <End Role="artist" Type="Self.artist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="work">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="artist">
+              <PropertyRef Name="id_work" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vistavki_artist">
+          <End Role="artist" Type="Self.artist" Multiplicity="0..1" />
+          <End Role="vistavki" Type="Self.vistavki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="artist">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vistavki">
+              <PropertyRef Name="id_artist" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vladelec_cityorg">
+          <End Role="cityorg" Type="Self.cityorg" Multiplicity="0..1" />
+          <End Role="vladelec" Type="Self.vladelec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cityorg">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vladelec">
+              <PropertyRef Name="id_cityorg" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hall_vistavki">
+          <End Role="vistavki" Type="Self.vistavki" Multiplicity="0..1" />
+          <End Role="hall" Type="Self.hall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vistavki">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="hall">
+              <PropertyRef Name="id_vistavki" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hall_vladelec">
+          <End Role="vladelec" Type="Self.vladelec" Multiplicity="0..1" />
+          <End Role="hall" Type="Self.hall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vladelec">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="hall">
+              <PropertyRef Name="id_vladelec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_work_razmer">
+          <End Role="razmer" Type="Self.razmer" Multiplicity="0..1" />
+          <End Role="work" Type="Self.work" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="razmer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="work">
+              <PropertyRef Name="id_razmer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="practicEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="artist" EntityType="Self.artist" />
+          <EntitySet Name="cityorg" EntityType="Self.cityorg" />
+          <EntitySet Name="hall" EntityType="Self.hall" />
+          <EntitySet Name="razmer" EntityType="Self.razmer" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="user" EntityType="Self.user" />
+          <EntitySet Name="vistavki" EntityType="Self.vistavki" />
+          <EntitySet Name="vladelec" EntityType="Self.vladelec" />
+          <EntitySet Name="work" EntityType="Self.work" />
+          <AssociationSet Name="FK_artist_work" Association="Self.FK_artist_work">
+            <End Role="work" EntitySet="work" />
+            <End Role="artist" EntitySet="artist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vistavki_artist" Association="Self.FK_vistavki_artist">
+            <End Role="artist" EntitySet="artist" />
+            <End Role="vistavki" EntitySet="vistavki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vladelec_cityorg" Association="Self.FK_vladelec_cityorg">
+            <End Role="cityorg" EntitySet="cityorg" />
+            <End Role="vladelec" EntitySet="vladelec" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hall_vistavki" Association="Self.FK_hall_vistavki">
+            <End Role="vistavki" EntitySet="vistavki" />
+            <End Role="hall" EntitySet="hall" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hall_vladelec" Association="Self.FK_hall_vladelec">
+            <End Role="vladelec" EntitySet="vladelec" />
+            <End Role="hall" EntitySet="hall" />
+          </AssociationSet>
+          <AssociationSet Name="FK_work_razmer" Association="Self.FK_work_razmer">
+            <End Role="razmer" EntitySet="razmer" />
+            <End Role="work" EntitySet="work" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище practicModelContainer" CdmEntityContainer="practicEntities">
+          <EntitySetMapping Name="artist">
+            <EntityTypeMapping TypeName="practicModel.artist">
+              <MappingFragment StoreEntitySet="artist">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="place_bith" ColumnName="place_bith" />
+                <ScalarProperty Name="bday" ColumnName="bday" />
+                <ScalarProperty Name="disc_artist" ColumnName="disc_artist" />
+                <ScalarProperty Name="education" ColumnName="education" />
+                <ScalarProperty Name="id_work" ColumnName="id_work" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cityorg">
+            <EntityTypeMapping TypeName="practicModel.cityorg">
+              <MappingFragment StoreEntitySet="cityorg">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="kind" ColumnName="kind" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hall">
+            <EntityTypeMapping TypeName="practicModel.hall">
+              <MappingFragment StoreEntitySet="hall">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="sqare" ColumnName="sqare" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="id_vistavki" ColumnName="id_vistavki" />
+                <ScalarProperty Name="id_vladelec" ColumnName="id_vladelec" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="razmer">
+            <EntityTypeMapping TypeName="practicModel.razmer">
+              <MappingFragment StoreEntitySet="razmer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="width" ColumnName="width" />
+                <ScalarProperty Name="glubina" ColumnName="glubina" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="practicModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="practicModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vistavki">
+            <EntityTypeMapping TypeName="practicModel.vistavki">
+              <MappingFragment StoreEntitySet="vistavki">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="kind" ColumnName="kind" />
+                <ScalarProperty Name="date_event" ColumnName="date_event" />
+                <ScalarProperty Name="id_artist" ColumnName="id_artist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vladelec">
+            <EntityTypeMapping TypeName="practicModel.vladelec">
+              <MappingFragment StoreEntitySet="vladelec">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="pgone" ColumnName="pgone" />
+                <ScalarProperty Name="id_cityorg" ColumnName="id_cityorg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="work">
+            <EntityTypeMapping TypeName="practicModel.work">
+              <MappingFragment StoreEntitySet="work">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="kind_material" ColumnName="kind_material" />
+                <ScalarProperty Name="date_create" ColumnName="date_create" />
+                <ScalarProperty Name="id_razmer" ColumnName="id_razmer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
