@@ -7,10 +7,20 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="135*"/>
+            <RowDefinition Height="117*"/>
+            <RowDefinition Height="182*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="99*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="84*"/>
+            <ColumnDefinition Width="213*"/>
+            <ColumnDefinition Width="179*"/>
+            <ColumnDefinition Width="251*"/>
+            <ColumnDefinition Width="65*"/>
         </Grid.ColumnDefinitions>
-
+        <Button Name="tbToAddDelete" Content="Add/Delete" Grid.Column="2" Grid.Row="1" Click="tbToAddDelete_Click"/>
+        <Button Name="tbEdit" Content="Edit" Grid.Column="4" Grid.Row="1" Click="tbEdit_Click"/>
     </Grid>
 </Window>

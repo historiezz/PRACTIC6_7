@@ -10,32 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace practic6_7
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для WinEdit.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class WinEdit : Window
     {
-        public MainWindow()
+        public WinEdit()
         {
             InitializeComponent();
         }
 
-        private void tbToAddDelete_Click(object sender, RoutedEventArgs e)
+        private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            WinAdd_Del win = new WinAdd_Del();
-            win.Show();
-            this.Hide();
-        }
-
-        private void tbEdit_Click(object sender, RoutedEventArgs e)
-        {
-           new WinEdit().Show();
-            this.Hide();
+            new MainWindow().Show();
+            Hide();
         }
     }
 }
