@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using _db = practic6_7.practicEntities;
+using word = Microsoft.Office.Interop.Word;
 
 namespace practic6_7
 {
@@ -55,6 +56,57 @@ namespace practic6_7
                 {
                     MessageBox.Show(ex.Message.ToString());
                 }
+            }
+        }
+
+        private void btnExtoPDF_Click(object sender, RoutedEventArgs e)
+        {
+            var works = _db.GetContext().work.ToList();
+            var application = new word.Application();
+            word.Document document = application.Documents.Add();
+
+            foreach (var work in works)
+            {
+                word.Paragraph paragraph = document.Paragraphs.Add();
+                word.Range worksRange = paragraph.Range;
+                worksRange.Text = work.id.ToString();
+                paragraph.set_Style("Заголовок 2");
+                worksRange.InsertParagraphAfter();
+
+                word.Paragraph tableparagraph = document.Paragraphs.Add();
+                word.Range tableRange = tableparagraph.Range; ;
+                word.Table worktable = document.Tables.Add(tableRange, works.Count() + 1, 3);
+                worktable.Borders.InsideLineStyle = worktable.Borders.OutsideLineStyle = word.WdLineStyle.wdLineStyleSingle;
+                worktable.Range.Cells.VerticalAlignment = word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+                word.Range cellRange;
+
+                cellRange = worktable.Cell(1, 1).Range;
+                cellRange.Text = "Id";
+                cellRange = worktable.Cell(1, 2).Range;
+                cellRange.Text = "Вид материала";
+                cellRange = worktable.Cell(1, 3).Range;
+                cellRange.Text = "Дата создания:";
+
+                worktable.Rows[1].Range.Bold = 1;
+                worktable.Rows[1].Range.ParagraphFormat.Alignment = word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                for (int i = 0; i < works.Count(); i++)
+                {
+                    var currentWorks = works[i];
+
+                    cellRange = worktable.Cell(i + 2, 1).Range;
+                    cellRange.Text = currentWorks.id.ToString();
+                    cellRange = worktable.Cell(i + 2, 2).Range;
+                    cellRange.Text = currentWorks.kind_material;
+                    cellRange = worktable.Cell(i + 2, 3).Range;
+                    cellRange.Text = currentWorks.date_create.ToString();
+                }
+
+                if (work != works.LastOrDefault())
+                    document.Words.Last.InsertBreak(word.WdBreakType.wdPageBreak);
+
+                document.SaveAs2(@"C:\Users\Данил\Desktop\учеба\Doc.pdf", word.WdExportFormat.wdExportFormatPDF);
             }
         }
     }
